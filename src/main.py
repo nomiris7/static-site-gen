@@ -4,7 +4,7 @@ from utils import copy_content, generate_page, generate_page_recursive
 import os
 
 def main():
-    basepath = sys.argv[0]
+    basepath = sys.argv[1]
     if basepath == None:
         basepath = '/'
     copy_content()
