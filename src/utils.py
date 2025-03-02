@@ -26,7 +26,7 @@ def extract_title(text):
     title = re.search(r"^#{1}\ {1}(.*)", text)
     return title.group(1)
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     with open(from_path) as file:
         markdown = file.read()
@@ -37,12 +37,14 @@ def generate_page(from_path, template_path, dest_path):
             html_string = html_content.to_html()
             final_string = template.replace(r"{{ Title }}", title)
             final_string = final_string.replace(r"{{ Content }}", html_string)
+            final_string = final_string.replace(f'href="/', f'href="{basepath}')
+            final_string = final_string.replace(f'src="/', f'src="{basepath}')
             #if not os.path.exists(dest_path):
             #    os.mkdir(dest_path)
             with open(dest_path, "w") as file_3:
                 file_3.write(final_string)
 
-def generate_page_recursive(source, template_path, dest):
+def generate_page_recursive(source, template_path, dest, basepath):
     if source == None:
         source = os.path.join(os.getcwd(), 'content')
     if dest == None:
@@ -57,4 +59,4 @@ def generate_page_recursive(source, template_path, dest):
         else:
             page = file.rstrip('.md')
             page = page + ".html"
-            generate_page(os.path.join(source, file), template_path ,os.path.join(dest, page))
+            generate_page(os.path.join(source, file), template_path ,os.path.join(dest, page), basepath)
