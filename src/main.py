@@ -7,7 +7,7 @@ def main():
     basepath = sys.argv[0]
     if basepath == None:
         basepath = '/'
-    copy_content('static', 'docs')
+    copy_content()
     template_path = os.path.join(os.getcwd(), 'template.html')
     generate_page_recursive('content', template_path, 'docs', basepath)
 

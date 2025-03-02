@@ -8,7 +8,7 @@ def copy_content(source = None, dest = None):
     if source == None:
         source = os.path.join(os.getcwd(), 'static')
     if dest == None:
-        dest = os.path.join(os.getcwd(), 'public')
+        dest = os.path.join(os.getcwd(), 'docs')
         shutil.rmtree(dest)
         os.mkdir(os.path.join(dest))
     
@@ -55,7 +55,7 @@ def generate_page_recursive(source, template_path, dest, basepath):
     for file in content_files:
         if os.path.isdir(os.path.join(source, file)):
             os.mkdir(os.path.join(dest, file))
-            generate_page_recursive(os.path.join(source, file), template_path ,os.path.join(dest, file))
+            generate_page_recursive(os.path.join(source, file), template_path ,os.path.join(dest, file), basepath)
         else:
             page = file.rstrip('.md')
             page = page + ".html"
